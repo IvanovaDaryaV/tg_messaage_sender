@@ -33,7 +33,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message.text
     recipient_email = context.user_data['email']
     sender_email = "mishasender@yandex.ru"
-    sender_password = "bdtpdnsvzwiozjuk"
+    sender_password = 'bdtpdnsvzwiozjuk'
 
     try:
         msg = MIMEMultipart()
@@ -42,8 +42,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg['Subject'] = "Уведомление"
         msg.attach(MIMEText(message, 'plain', 'utf-8'))
 
-        with smtplib.SMTP('smtp.yandex.ru', 587) as server:
-            server.starttls()
+        with smtplib.SMTP_SSL('smtp.yandex.ru', 465) as server:
             server.login(sender_email, sender_password)
             server.send_message(msg)  # Отправка MIME-сообщения
         await update.message.reply_text("Сообщение успешно отправлено! :)")
